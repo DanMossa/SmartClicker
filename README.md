@@ -1,0 +1,4 @@
+# SmartClicker
+Smart AutoClicker
+
+Test
