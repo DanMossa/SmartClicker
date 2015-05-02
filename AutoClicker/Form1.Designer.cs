@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
             this.buttonSeed = new System.Windows.Forms.Button();
             this.labelSeed = new System.Windows.Forms.Label();
@@ -39,6 +40,7 @@
             this.timerAutoClick = new System.Windows.Forms.Timer(this.components);
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.webControl1 = new Awesomium.Windows.Forms.WebControl(this.components);
+            this.webClient1 = new System.Net.WebClient();
             this.SuspendLayout();
             // 
             // button1
@@ -54,7 +56,7 @@
             // buttonSeed
             // 
             this.buttonSeed.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.buttonSeed.Location = new System.Drawing.Point(136, 57);
+            this.buttonSeed.Location = new System.Drawing.Point(-174, 75);
             this.buttonSeed.Name = "buttonSeed";
             this.buttonSeed.Size = new System.Drawing.Size(166, 57);
             this.buttonSeed.TabIndex = 1;
@@ -104,10 +106,6 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "Move your mouse to center of where you want to click and press ` to start/stop";
             // 
-            // timerAutoClick
-            // 
-            this.timerAutoClick.Tick += new System.EventHandler(this.timerAutoClick_Tick);
-            // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(12, 119);
@@ -117,15 +115,30 @@
             // 
             // webControl1
             // 
-            this.webControl1.Location = new System.Drawing.Point(432, 12);
-            this.webControl1.Size = new System.Drawing.Size(497, 360);
+            this.webControl1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.webControl1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.webControl1.Location = new System.Drawing.Point(0, 0);
+            this.webControl1.Size = new System.Drawing.Size(320, 479);
             this.webControl1.TabIndex = 7;
+            this.webControl1.TitleChanged += new Awesomium.Core.TitleChangedEventHandler(this.Awesomium_Windows_Forms_WebControl_TitleChanged);
+            this.webControl1.ShowCreatedWebView += new Awesomium.Core.ShowCreatedWebViewEventHandler(this.Awesomium_Windows_Forms_WebControl_ShowCreatedWebView);
+            // 
+            // webClient1
+            // 
+            this.webClient1.BaseAddress = "";
+            this.webClient1.CachePolicy = null;
+            this.webClient1.Credentials = null;
+            this.webClient1.Encoding = ((System.Text.Encoding)(resources.GetObject("webClient1.Encoding")));
+            this.webClient1.Headers = ((System.Net.WebHeaderCollection)(resources.GetObject("webClient1.Headers")));
+            this.webClient1.QueryString = ((System.Collections.Specialized.NameValueCollection)(resources.GetObject("webClient1.QueryString")));
+            this.webClient1.UseDefaultCredentials = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(941, 443);
+            this.BackColor = System.Drawing.Color.OrangeRed;
+            this.ClientSize = new System.Drawing.Size(320, 479);
             this.Controls.Add(this.webControl1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
@@ -158,6 +171,7 @@
         private System.Windows.Forms.Timer timerAutoClick;
         private System.Windows.Forms.TextBox textBox1;
         private Awesomium.Windows.Forms.WebControl webControl1;
+        private System.Net.WebClient webClient1;
     }
 }
 

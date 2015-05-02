@@ -10,12 +10,16 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsInput;
+using CefSharp;
+using CefSharp.WinForms;
+
 
 namespace AutoClicker
 {
 
     public partial class Form1 : Form
     {
+
         public Form1()
         {
             InitializeComponent();
@@ -23,8 +27,7 @@ namespace AutoClicker
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-            webControl1.Source = new Uri("http://mossaband.com/AutoClicker/login.html");
+            webControl1.Source = new Uri("http://mossaband.com/AutoClicker/create.html");
         GetTemp:
 
             int retry = 0;
@@ -59,17 +62,17 @@ namespace AutoClicker
                     Application.Exit();
                 }
             }
-            
+
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.Cursor = new Cursor(Cursor.Current.Handle);
-            
-            int xPosition = Cursor.Position.X;
-            int yPosition = Cursor.Position.Y;
-            Console.Write(xPosition + " " + yPosition);
+            //this.Cursor = new Cursor(Cursor.Current.Handle);
+
+            //int xPosition = Cursor.Position.X;
+            //int yPosition = Cursor.Position.Y;
+            //Console.Write(xPosition + " " + yPosition);
 
         }
 
@@ -77,7 +80,7 @@ namespace AutoClicker
 
         private void buttonClickFast_Click(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(labelSeed.Text) > 0 )
+            if (Convert.ToInt32(labelSeed.Text) > 0)
             {
                 clicks = clicks + 1;
             }
@@ -127,14 +130,34 @@ namespace AutoClicker
                     this.Cursor = new Cursor(Cursor.Current.Handle);
                     int xPosition = Cursor.Position.X;
                     int yPosition = Cursor.Position.Y;
-                   
+
                     Console.Write(xPosition + " " + yPosition);
                 }
-            } 
+            }
 
         }
 
-        private void timerAutoClick_Tick(object sender, EventArgs e)
+        private void Awesomium_Windows_Forms_WebControl_TitleChanged(object sender, Awesomium.Core.TitleChangedEventArgs e)
+        {
+            if (webControl1.Title.Contains("Create"))
+            {
+                //this.Size = new Size(320, 456);
+                //webControl1.Height = 400;
+                //webControl1.Width = 357;
+                
+            }
+            else if (webControl1.Title.Contains("Login"))
+            {
+                //this.Size = new Size(336, 395);
+                //webControl1.Height = 357;
+                //webControl1.Width = 320;
+
+
+            }
+
+        }
+
+        private void Awesomium_Windows_Forms_WebControl_ShowCreatedWebView(object sender, Awesomium.Core.ShowCreatedWebViewEventArgs e)
         {
 
         }
