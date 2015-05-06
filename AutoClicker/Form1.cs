@@ -65,10 +65,11 @@ namespace AutoClicker
         private void button1_Click(object sender, EventArgs e)
         {
             this.Cursor = new Cursor(Cursor.Current.Handle);
+            xCoord.Text = Convert.ToString(Cursor.Position.X);
+            yCoord.Text = Convert.ToString(Cursor.Position.Y);
 
-            int xPosition = Cursor.Position.X;
-            int yPosition = Cursor.Position.Y;
-            Console.Write(xPosition + " " + yPosition);
+            
+            
 
         }
 
@@ -97,9 +98,8 @@ namespace AutoClicker
             {
                 buttonSeed.Visible = false;
                 labelSeed.Visible = false;
-                button1.Visible = true;
                 downloadedTemp.Visible = true;
-                instructionsLabel.Visible = true;
+                instructionsText.Visible = true;
                 timerSeed.Stop();
                 //Diving by 30 to get Clicks Per Second
                 clicksPerSecondText.Text = Convert.ToString(clicks / 30);
@@ -116,8 +116,7 @@ namespace AutoClicker
             labelSeed.Visible = true;
             clicksPerSecondText.Visible = true;
             downloadedTemp.Visible = true;
-            button1.Visible = true;
-            instructionsLabel.Visible = true;
+            instructionsText.Visible = true;
             labelSeed.Visible = true;
         }
 
@@ -135,17 +134,14 @@ namespace AutoClicker
                     {
                         //The ClicksPerSecond is saved as a decimal.
                         //Converting it to string
-                        string autoclickInterval = Convert.ToString((1100 / Convert.ToDecimal(clicksPerSecondText.Text)));
-                        autoclickInterval = autoclickInterval.Substring(0, 4);
-                        timerAutoClick.Interval = Convert.ToInt32(autoclickInterval);
+                        string [] autoclickInterval = Convert.ToString((1100 / Convert.ToDecimal(clicksPerSecondText.Text))).Split('.');
+                        timerAutoClick.Interval = Convert.ToInt32(autoclickInterval[0]);
                     }
                         //If it's more than 50 degrees (HOT).
                     else
                     {
-                        string autoclickInterval = Convert.ToString((1000 / Convert.ToDecimal(clicksPerSecondText.Text)));
-                        autoclickInterval = autoclickInterval.Substring(0, 4);
-                        timerAutoClick.Interval = Convert.ToInt32(autoclickInterval);
-
+                        string[] autoclickInterval = Convert.ToString((1000 / Convert.ToDecimal(clicksPerSecondText.Text))).Split('.');
+                        timerAutoClick.Interval = Convert.ToInt32(autoclickInterval[0]);
                     }
                     
 
@@ -158,10 +154,8 @@ namespace AutoClicker
                         timerAutoClick.Stop();
                     }
                     this.Cursor = new Cursor(Cursor.Current.Handle);
-                    int xPosition = Cursor.Position.X;
-                    int yPosition = Cursor.Position.Y;
-
-                    Console.Write(xPosition + " " + yPosition);
+                    xCoord.Text = Convert.ToString(Cursor.Position.X);
+                    yCoord.Text = Convert.ToString(Cursor.Position.Y);
                 }
             }
 
@@ -209,7 +203,7 @@ namespace AutoClicker
                     }
                     string temp = downloadedTemp.Text;
                     downloadedTemp.Text = temp.Remove(0, 7);
-                    this.Size = new Size(605, 403);
+                    this.Size = new Size(537, 124);
 
                     //Create Settings.txt if it doesn't exist
                     if (!File.Exists(myDocuments + @"\DG\AutoClicker\Settings.txt"))
@@ -222,9 +216,8 @@ namespace AutoClicker
                         //If Settings.txt already exists, that means they went ahead and calibrated their clicks per second already
                     else
                     {
-                        button1.Visible = true;
                         downloadedTemp.Visible = true;
-                        instructionsLabel.Visible = true;
+                        instructionsText.Visible = true;
                         string readSettingsTXT = File.ReadAllText(myDocuments + @"\DG\AutoClicker\Settings.txt");
                         clicksPerSecondText.Text = readSettingsTXT;
                     }
@@ -253,11 +246,15 @@ namespace AutoClicker
 
             }
         }
-        InputSimulator lol = new InputSimulator();
+
+        Random rndm = new Random();
+        InputSimulator sim = new InputSimulator();
         private void timerAutoClick_Tick(object sender, EventArgs e)
         {
-
-            lol.Mouse.LeftButtonClick();
+            int xRandomNum = rndm.Next(-2, 2);
+            int yRandomNum = rndm.Next(-2, 2);
+            Cursor.Position = new Point(Convert.ToInt32(xCoord.Text) + xRandomNum, Convert.ToInt32(yCoord.Text) + yRandomNum);
+            sim.Mouse.LeftButtonClick();
         }
 
 

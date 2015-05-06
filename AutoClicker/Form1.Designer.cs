@@ -35,12 +35,14 @@
             this.labelSeed = new System.Windows.Forms.Label();
             this.timerSeed = new System.Windows.Forms.Timer(this.components);
             this.refine = new System.Windows.Forms.Button();
-            this.instructionsLabel = new System.Windows.Forms.Label();
             this.timerAutoClick = new System.Windows.Forms.Timer(this.components);
             this.loadingText = new System.Windows.Forms.Label();
             this.downloadedTemp = new System.Windows.Forms.TextBox();
             this.clicksPerSecondText = new System.Windows.Forms.TextBox();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.instructionsText = new System.Windows.Forms.TextBox();
+            this.xCoord = new System.Windows.Forms.TextBox();
+            this.yCoord = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // button1
@@ -62,7 +64,7 @@
             this.buttonSeed.BackColor = System.Drawing.Color.Black;
             this.buttonSeed.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonSeed.ForeColor = System.Drawing.Color.White;
-            this.buttonSeed.Location = new System.Drawing.Point(170, 166);
+            this.buttonSeed.Location = new System.Drawing.Point(150, 9);
             this.buttonSeed.Margin = new System.Windows.Forms.Padding(4);
             this.buttonSeed.Name = "buttonSeed";
             this.buttonSeed.Size = new System.Drawing.Size(221, 66);
@@ -75,11 +77,11 @@
             // labelSeed
             // 
             this.labelSeed.AutoSize = true;
-            this.labelSeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelSeed.Location = new System.Drawing.Point(269, 243);
+            this.labelSeed.Font = new System.Drawing.Font("Georgia", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSeed.Location = new System.Drawing.Point(40, 23);
             this.labelSeed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelSeed.Name = "labelSeed";
-            this.labelSeed.Size = new System.Drawing.Size(36, 25);
+            this.labelSeed.Size = new System.Drawing.Size(55, 38);
             this.labelSeed.TabIndex = 2;
             this.labelSeed.Text = "30";
             this.labelSeed.Visible = false;
@@ -103,17 +105,6 @@
             this.refine.Visible = false;
             this.refine.Click += new System.EventHandler(this.refine_Click);
             // 
-            // instructionsLabel
-            // 
-            this.instructionsLabel.AutoSize = true;
-            this.instructionsLabel.Location = new System.Drawing.Point(45, 60);
-            this.instructionsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.instructionsLabel.Name = "instructionsLabel";
-            this.instructionsLabel.Size = new System.Drawing.Size(457, 15);
-            this.instructionsLabel.TabIndex = 5;
-            this.instructionsLabel.Text = "Move your mouse to center of where you want to click and press ` to start/stop";
-            this.instructionsLabel.Visible = false;
-            // 
             // timerAutoClick
             // 
             this.timerAutoClick.Tick += new System.EventHandler(this.timerAutoClick_Tick);
@@ -124,7 +115,7 @@
             this.loadingText.AutoSize = true;
             this.loadingText.Font = new System.Drawing.Font("Georgia", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.loadingText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.loadingText.Location = new System.Drawing.Point(137, 146);
+            this.loadingText.Location = new System.Drawing.Point(103, 6);
             this.loadingText.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.loadingText.Name = "loadingText";
             this.loadingText.Size = new System.Drawing.Size(314, 72);
@@ -148,6 +139,7 @@
             this.clicksPerSecondText.ReadOnly = true;
             this.clicksPerSecondText.Size = new System.Drawing.Size(132, 21);
             this.clicksPerSecondText.TabIndex = 3;
+            this.clicksPerSecondText.Visible = false;
             // 
             // webBrowser1
             // 
@@ -155,9 +147,41 @@
             this.webBrowser1.Location = new System.Drawing.Point(0, 0);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(589, 364);
+            this.webBrowser1.Size = new System.Drawing.Size(521, 85);
             this.webBrowser1.TabIndex = 9;
             this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser1_DocumentCompleted);
+            // 
+            // instructionsText
+            // 
+            this.instructionsText.BackColor = System.Drawing.Color.White;
+            this.instructionsText.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.instructionsText.Font = new System.Drawing.Font("Georgia", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.instructionsText.Location = new System.Drawing.Point(12, 7);
+            this.instructionsText.Multiline = true;
+            this.instructionsText.Name = "instructionsText";
+            this.instructionsText.ReadOnly = true;
+            this.instructionsText.Size = new System.Drawing.Size(497, 71);
+            this.instructionsText.TabIndex = 10;
+            this.instructionsText.Text = "Move your mouse to the center of where you want to click and press ` to start/sto" +
+    "p";
+            this.instructionsText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.instructionsText.Visible = false;
+            // 
+            // xCoord
+            // 
+            this.xCoord.Location = new System.Drawing.Point(12, 64);
+            this.xCoord.Name = "xCoord";
+            this.xCoord.Size = new System.Drawing.Size(25, 21);
+            this.xCoord.TabIndex = 11;
+            this.xCoord.Visible = false;
+            // 
+            // yCoord
+            // 
+            this.yCoord.Location = new System.Drawing.Point(44, 64);
+            this.yCoord.Name = "yCoord";
+            this.yCoord.Size = new System.Drawing.Size(24, 21);
+            this.yCoord.TabIndex = 12;
+            this.yCoord.Visible = false;
             // 
             // Form1
             // 
@@ -166,16 +190,18 @@
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(589, 364);
-            this.Controls.Add(this.instructionsLabel);
+            this.ClientSize = new System.Drawing.Size(521, 85);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.yCoord);
+            this.Controls.Add(this.xCoord);
             this.Controls.Add(this.refine);
             this.Controls.Add(this.clicksPerSecondText);
             this.Controls.Add(this.downloadedTemp);
             this.Controls.Add(this.labelSeed);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonSeed);
             this.Controls.Add(this.loadingText);
             this.Controls.Add(this.webBrowser1);
+            this.Controls.Add(this.instructionsText);
             this.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
@@ -183,6 +209,7 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "DG Smart AutoClicker 0.0.1";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.ResumeLayout(false);
@@ -197,12 +224,14 @@
         private System.Windows.Forms.Label labelSeed;
         private System.Windows.Forms.Timer timerSeed;
         private System.Windows.Forms.Button refine;
-        private System.Windows.Forms.Label instructionsLabel;
         private System.Windows.Forms.Timer timerAutoClick;
         private System.Windows.Forms.Label loadingText;
         private System.Windows.Forms.TextBox downloadedTemp;
         private System.Windows.Forms.TextBox clicksPerSecondText;
         private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.TextBox instructionsText;
+        private System.Windows.Forms.TextBox xCoord;
+        private System.Windows.Forms.TextBox yCoord;
     }
 }
 
