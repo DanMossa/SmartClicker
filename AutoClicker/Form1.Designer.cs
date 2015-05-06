@@ -124,12 +124,11 @@
             // 
             // downloadedTemp
             // 
-            this.downloadedTemp.Location = new System.Drawing.Point(13, 138);
+            this.downloadedTemp.Location = new System.Drawing.Point(0, 40);
             this.downloadedTemp.Margin = new System.Windows.Forms.Padding(4);
             this.downloadedTemp.Name = "downloadedTemp";
             this.downloadedTemp.Size = new System.Drawing.Size(132, 21);
             this.downloadedTemp.TabIndex = 6;
-            this.downloadedTemp.Visible = false;
             // 
             // clicksPerSecondText
             // 
@@ -210,6 +209,7 @@
             this.Name = "Form1";
             this.Text = "DG Smart AutoClicker 0.0.1";
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.ResumeLayout(false);

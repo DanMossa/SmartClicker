@@ -18,6 +18,10 @@ namespace AutoClicker
 
     public partial class Form1 : Form
     {
+
+
+
+
         //Code for changing webBrowser User Agent
         [DllImport("urlmon.dll", CharSet = CharSet.Ansi)]
         private static extern int UrlMkSetSessionOption(int dwOption, string pBuffer, int dwBufferLength, int dwReserved);
@@ -28,9 +32,14 @@ namespace AutoClicker
             UrlMkSetSessionOption(URLMON_OPTION_USERAGENT, Agent, Agent.Length, 0);
         }
 
+        private AutoClicker.GlobalHotkey ghk;
+
+
         public Form1()
         {
             InitializeComponent();
+            ghk = new AutoClicker.GlobalHotkey(Constants.CTRL, Keys.Oemtilde, this);
+
         }
 
         //Function to find tags inside a string
@@ -59,17 +68,28 @@ namespace AutoClicker
             this.Size = new Size(336, 396);
             webBrowser1.Navigate("http://mossaband.com/AutoClicker/login.html");
 
-        
+
         }
 
+
+        Hotkey hk = new Hotkey();
         private void button1_Click(object sender, EventArgs e)
         {
             this.Cursor = new Cursor(Cursor.Current.Handle);
             xCoord.Text = Convert.ToString(Cursor.Position.X);
             yCoord.Text = Convert.ToString(Cursor.Position.Y);
 
-            
-            
+
+
+            hk.KeyCode = Keys.Oemtilde;
+            hk.Windows = true;
+            hk.Pressed += delegate { Console.WriteLine("Windows+1 pressed!"); };
+
+            if (!hk.GetCanRegister(this))
+{ Console.WriteLine("Whoops, looks like attempts to register will fail or throw an exception, show an error/visual user feedback"); }
+else
+{ hk.Register(this); }
+
 
         }
 
@@ -134,16 +154,16 @@ namespace AutoClicker
                     {
                         //The ClicksPerSecond is saved as a decimal.
                         //Converting it to string
-                        string [] autoclickInterval = Convert.ToString((1100 / Convert.ToDecimal(clicksPerSecondText.Text))).Split('.');
+                        string[] autoclickInterval = Convert.ToString((1100 / Convert.ToDecimal(clicksPerSecondText.Text))).Split('.');
                         timerAutoClick.Interval = Convert.ToInt32(autoclickInterval[0]);
                     }
-                        //If it's more than 50 degrees (HOT).
+                    //If it's more than 50 degrees (HOT).
                     else
                     {
                         string[] autoclickInterval = Convert.ToString((1000 / Convert.ToDecimal(clicksPerSecondText.Text))).Split('.');
                         timerAutoClick.Interval = Convert.ToInt32(autoclickInterval[0]);
                     }
-                    
+
 
                     if (!timerAutoClick.Enabled)
                     {
@@ -174,10 +194,10 @@ namespace AutoClicker
                 //If this is the Create an Account page, change the size of the form
                 this.Size = new Size(336, 655);
             }
-                //This is the page after the User Logs in
+            //This is the page after the User Logs in
             else if (webBrowser1.DocumentText.Contains("ZZ"))
             {
-                
+
                 webBrowser1.Visible = false;
 
                 string html = webBrowser1.DocumentText;
@@ -195,7 +215,7 @@ namespace AutoClicker
                     WebClient Weather = new WebClient();
                     //Plugin the zipcode and countrycode we found on the login page
                     string htmlWeather = Weather.DownloadString("http://api.openweathermap.org/data/2.5/weather?zip=" + zipcode + "," + countrycode + "&units=imperial");
-                    MatchCollection temperature = Regex.Matches(htmlWeather, "\"temp\":(.{5})", RegexOptions.Singleline);
+                    MatchCollection temperature = Regex.Matches(htmlWeather, "\"temp\":(\\d*.\\d)", RegexOptions.Singleline);
 
                     foreach (Match currentTemp in temperature)
                     {
@@ -213,7 +233,7 @@ namespace AutoClicker
                         buttonSeed.Visible = true;
                         labelSeed.Visible = true;
                     }
-                        //If Settings.txt already exists, that means they went ahead and calibrated their clicks per second already
+                    //If Settings.txt already exists, that means they went ahead and calibrated their clicks per second already
                     else
                     {
                         downloadedTemp.Visible = true;
@@ -255,6 +275,12 @@ namespace AutoClicker
             int yRandomNum = rndm.Next(-2, 2);
             Cursor.Position = new Point(Convert.ToInt32(xCoord.Text) + xRandomNum, Convert.ToInt32(yCoord.Text) + yRandomNum);
             sim.Mouse.LeftButtonClick();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (hk.Registered)
+            { hk.Unregister(); }
         }
 
 
