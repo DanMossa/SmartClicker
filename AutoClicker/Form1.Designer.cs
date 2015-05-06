@@ -38,7 +38,6 @@
             this.instructionsLabel = new System.Windows.Forms.Label();
             this.timerAutoClick = new System.Windows.Forms.Timer(this.components);
             this.loadingText = new System.Windows.Forms.Label();
-            this.webControl1 = new Awesomium.Windows.Forms.WebControl(this.components);
             this.downloadedTemp = new System.Windows.Forms.TextBox();
             this.clicksPerSecondText = new System.Windows.Forms.TextBox();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
@@ -132,12 +131,6 @@
             this.loadingText.TabIndex = 8;
             this.loadingText.Text = "Loading...";
             // 
-            // webControl1
-            // 
-            this.webControl1.Location = new System.Drawing.Point(0, 0);
-            this.webControl1.Size = new System.Drawing.Size(0, 0);
-            this.webControl1.TabIndex = 0;
-            // 
             // downloadedTemp
             // 
             this.downloadedTemp.Location = new System.Drawing.Point(13, 138);
@@ -155,7 +148,6 @@
             this.clicksPerSecondText.ReadOnly = true;
             this.clicksPerSecondText.Size = new System.Drawing.Size(132, 21);
             this.clicksPerSecondText.TabIndex = 3;
-            this.clicksPerSecondText.Visible = false;
             // 
             // webBrowser1
             // 
@@ -208,7 +200,6 @@
         private System.Windows.Forms.Label instructionsLabel;
         private System.Windows.Forms.Timer timerAutoClick;
         private System.Windows.Forms.Label loadingText;
-        private Awesomium.Windows.Forms.WebControl webControl1;
         private System.Windows.Forms.TextBox downloadedTemp;
         private System.Windows.Forms.TextBox clicksPerSecondText;
         private System.Windows.Forms.WebBrowser webBrowser1;
