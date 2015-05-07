@@ -57,7 +57,6 @@
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // buttonSeed
             // 
@@ -129,6 +128,7 @@
             this.downloadedTemp.Name = "downloadedTemp";
             this.downloadedTemp.Size = new System.Drawing.Size(132, 21);
             this.downloadedTemp.TabIndex = 6;
+            this.downloadedTemp.Visible = false;
             // 
             // clicksPerSecondText
             // 
@@ -208,10 +208,8 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "DG Smart AutoClicker 0.0.1";
-            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

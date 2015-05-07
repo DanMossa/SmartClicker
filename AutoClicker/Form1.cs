@@ -32,13 +32,9 @@ namespace AutoClicker
             UrlMkSetSessionOption(URLMON_OPTION_USERAGENT, Agent, Agent.Length, 0);
         }
 
-        private AutoClicker.GlobalHotkey ghk;
-
-
         public Form1()
         {
             InitializeComponent();
-            ghk = new AutoClicker.GlobalHotkey(Constants.CTRL, Keys.Oemtilde, this);
 
         }
 
@@ -52,6 +48,8 @@ namespace AutoClicker
             return s.Substring(startIndex, endIndex - startIndex);
         }
 
+
+        Hotkey hk = new Hotkey();
         //Variable for mydocuments
         String myDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         private void Form1_Load(object sender, EventArgs e)
@@ -68,29 +66,47 @@ namespace AutoClicker
             this.Size = new Size(336, 396);
             webBrowser1.Navigate("http://mossaband.com/AutoClicker/login.html");
 
+            hk.KeyCode = Keys.Oemtilde;
+            //hk.Windows = true;
+            hk.Pressed += hk_Pressed;
 
+            hk.Register(this);
         }
 
-
-        Hotkey hk = new Hotkey();
-        private void button1_Click(object sender, EventArgs e)
+        //Start Autoclicker
+        private void hk_Pressed(object sender, EventArgs e)
         {
-            this.Cursor = new Cursor(Cursor.Current.Handle);
-            xCoord.Text = Convert.ToString(Cursor.Position.X);
-            yCoord.Text = Convert.ToString(Cursor.Position.Y);
+            if (buttonSeed.Visible == false)
+            {
+                //Check the current temperature
+                //If it's less than 50 degrees (COLD), click slower.
+                if (Convert.ToDecimal(downloadedTemp.Text) <= 50)
+                {
+                    //The ClicksPerSecond is saved as a decimal.
+                    //Converting it to string
+                    string[] autoclickInterval = Convert.ToString((1100 / Convert.ToDecimal(clicksPerSecondText.Text))).Split('.');
+                    timerAutoClick.Interval = Convert.ToInt32(autoclickInterval[0]);
+                }
+                //If it's more than 50 degrees (HOT).
+                else
+                {
+                    string[] autoclickInterval = Convert.ToString((1000 / Convert.ToDecimal(clicksPerSecondText.Text))).Split('.');
+                    timerAutoClick.Interval = Convert.ToInt32(autoclickInterval[0]);
+                }
 
 
-
-            hk.KeyCode = Keys.Oemtilde;
-            hk.Windows = true;
-            hk.Pressed += delegate { Console.WriteLine("Windows+1 pressed!"); };
-
-            if (!hk.GetCanRegister(this))
-{ Console.WriteLine("Whoops, looks like attempts to register will fail or throw an exception, show an error/visual user feedback"); }
-else
-{ hk.Register(this); }
-
-
+                if (!timerAutoClick.Enabled)
+                {
+                    timerAutoClick.Start();
+                }
+                else if (timerAutoClick.Enabled)
+                {
+                    timerAutoClick.Stop();
+                }
+                this.Cursor = new Cursor(Cursor.Current.Handle);
+                xCoord.Text = Convert.ToString(Cursor.Position.X);
+                yCoord.Text = Convert.ToString(Cursor.Position.Y);
+            }
         }
 
         //Calibrate personal Clicks Per Second for 30 seconds
@@ -140,46 +156,6 @@ else
             labelSeed.Visible = true;
         }
 
-        //Start Autoclicker
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (buttonSeed.Visible == false)
-            {
-                //Start once ` is pressed
-                if (e.KeyCode == Keys.Oemtilde)
-                {
-                    //Check the current temperature
-                    //If it's less than 50 degrees (COLD), click slower.
-                    if (Convert.ToDecimal(downloadedTemp.Text) <= 50)
-                    {
-                        //The ClicksPerSecond is saved as a decimal.
-                        //Converting it to string
-                        string[] autoclickInterval = Convert.ToString((1100 / Convert.ToDecimal(clicksPerSecondText.Text))).Split('.');
-                        timerAutoClick.Interval = Convert.ToInt32(autoclickInterval[0]);
-                    }
-                    //If it's more than 50 degrees (HOT).
-                    else
-                    {
-                        string[] autoclickInterval = Convert.ToString((1000 / Convert.ToDecimal(clicksPerSecondText.Text))).Split('.');
-                        timerAutoClick.Interval = Convert.ToInt32(autoclickInterval[0]);
-                    }
-
-
-                    if (!timerAutoClick.Enabled)
-                    {
-                        timerAutoClick.Start();
-                    }
-                    else if (timerAutoClick.Enabled)
-                    {
-                        timerAutoClick.Stop();
-                    }
-                    this.Cursor = new Cursor(Cursor.Current.Handle);
-                    xCoord.Text = Convert.ToString(Cursor.Position.X);
-                    yCoord.Text = Convert.ToString(Cursor.Position.Y);
-                }
-            }
-
-        }
 
         private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
@@ -261,9 +237,6 @@ else
                         Application.Exit();
                     }
                 }
-
-
-
             }
         }
 
@@ -282,7 +255,6 @@ else
             if (hk.Registered)
             { hk.Unregister(); }
         }
-
 
 
     }
