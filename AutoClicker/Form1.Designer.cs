@@ -34,7 +34,7 @@
             this.buttonSeed = new System.Windows.Forms.Button();
             this.labelSeed = new System.Windows.Forms.Label();
             this.timerSeed = new System.Windows.Forms.Timer(this.components);
-            this.refine = new System.Windows.Forms.Button();
+            this.refineclickButton = new System.Windows.Forms.Button();
             this.timerAutoClick = new System.Windows.Forms.Timer(this.components);
             this.loadingText = new System.Windows.Forms.Label();
             this.downloadedTemp = new System.Windows.Forms.TextBox();
@@ -90,19 +90,19 @@
             this.timerSeed.Interval = 1000;
             this.timerSeed.Tick += new System.EventHandler(this.timerSeed_Tick);
             // 
-            // refine
+            // refineclickButton
             // 
-            this.refine.BackColor = System.Drawing.Color.Black;
-            this.refine.ForeColor = System.Drawing.Color.White;
-            this.refine.Location = new System.Drawing.Point(427, 14);
-            this.refine.Margin = new System.Windows.Forms.Padding(4);
-            this.refine.Name = "refine";
-            this.refine.Size = new System.Drawing.Size(141, 26);
-            this.refine.TabIndex = 4;
-            this.refine.Text = "Refine Autoclicker";
-            this.refine.UseVisualStyleBackColor = false;
-            this.refine.Visible = false;
-            this.refine.Click += new System.EventHandler(this.refine_Click);
+            this.refineclickButton.BackColor = System.Drawing.Color.Black;
+            this.refineclickButton.ForeColor = System.Drawing.Color.White;
+            this.refineclickButton.Location = new System.Drawing.Point(424, 37);
+            this.refineclickButton.Margin = new System.Windows.Forms.Padding(4);
+            this.refineclickButton.Name = "refineclickButton";
+            this.refineclickButton.Size = new System.Drawing.Size(84, 45);
+            this.refineclickButton.TabIndex = 4;
+            this.refineclickButton.Text = "Refine Autoclicker";
+            this.refineclickButton.UseVisualStyleBackColor = false;
+            this.refineclickButton.Visible = false;
+            this.refineclickButton.Click += new System.EventHandler(this.refine_Click);
             // 
             // timerAutoClick
             // 
@@ -161,8 +161,8 @@
             this.instructionsText.ReadOnly = true;
             this.instructionsText.Size = new System.Drawing.Size(497, 71);
             this.instructionsText.TabIndex = 10;
-            this.instructionsText.Text = "Move your mouse to the center of where you want to click and press ` to start/sto" +
-    "p";
+            this.instructionsText.Text = "Move your mouse to the center of where you want to click and press WinKey + ` to " +
+    "start/stop";
             this.instructionsText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.instructionsText.Visible = false;
             // 
@@ -193,7 +193,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.yCoord);
             this.Controls.Add(this.xCoord);
-            this.Controls.Add(this.refine);
+            this.Controls.Add(this.refineclickButton);
             this.Controls.Add(this.clicksPerSecondText);
             this.Controls.Add(this.downloadedTemp);
             this.Controls.Add(this.labelSeed);
@@ -207,7 +207,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "DG Smart AutoClicker 0.0.1";
+            this.Text = "DG Smart AutoClicker 0.0.2";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
@@ -221,7 +221,7 @@
         private System.Windows.Forms.Button buttonSeed;
         private System.Windows.Forms.Label labelSeed;
         private System.Windows.Forms.Timer timerSeed;
-        private System.Windows.Forms.Button refine;
+        private System.Windows.Forms.Button refineclickButton;
         private System.Windows.Forms.Timer timerAutoClick;
         private System.Windows.Forms.Label loadingText;
         private System.Windows.Forms.TextBox downloadedTemp;

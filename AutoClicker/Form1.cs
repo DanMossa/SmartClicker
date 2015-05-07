@@ -65,20 +65,19 @@ namespace AutoClicker
             //Perfect size to show all of the webpage
             this.Size = new Size(336, 396);
             webBrowser1.Navigate("http://mossaband.com/AutoClicker/login.html");
-
+            //Setting GlobalHotKey
             hk.KeyCode = Keys.Oemtilde;
-            //hk.Windows = true;
+            hk.Windows = true;
             hk.Pressed += hk_Pressed;
-
             hk.Register(this);
         }
 
         //Start Autoclicker
         private void hk_Pressed(object sender, EventArgs e)
         {
-            if (buttonSeed.Visible == false)
+            if (!string.IsNullOrWhiteSpace(downloadedTemp.Text))
             {
-                //Check the current temperature
+                //downloadTemp.Text contains the temperature
                 //If it's less than 50 degrees (COLD), click slower.
                 if (Convert.ToDecimal(downloadedTemp.Text) <= 50)
                 {
@@ -134,7 +133,6 @@ namespace AutoClicker
             {
                 buttonSeed.Visible = false;
                 labelSeed.Visible = false;
-                downloadedTemp.Visible = true;
                 instructionsText.Visible = true;
                 timerSeed.Stop();
                 //Diving by 30 to get Clicks Per Second
@@ -151,7 +149,6 @@ namespace AutoClicker
             buttonSeed.Visible = true;
             labelSeed.Visible = true;
             clicksPerSecondText.Visible = true;
-            downloadedTemp.Visible = true;
             instructionsText.Visible = true;
             labelSeed.Visible = true;
         }
@@ -212,7 +209,7 @@ namespace AutoClicker
                     //If Settings.txt already exists, that means they went ahead and calibrated their clicks per second already
                     else
                     {
-                        downloadedTemp.Visible = true;
+                        refineclickButton.Visible = true;
                         instructionsText.Visible = true;
                         string readSettingsTXT = File.ReadAllText(myDocuments + @"\DG\AutoClicker\Settings.txt");
                         clicksPerSecondText.Text = readSettingsTXT;
