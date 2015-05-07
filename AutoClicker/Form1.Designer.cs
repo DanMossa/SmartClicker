@@ -161,8 +161,8 @@
             this.instructionsText.ReadOnly = true;
             this.instructionsText.Size = new System.Drawing.Size(497, 71);
             this.instructionsText.TabIndex = 10;
-            this.instructionsText.Text = "Move your mouse to the center of where you want to click and press ` to start/sto" +
-    "p";
+            this.instructionsText.Text = "Move your mouse to the center of where you want to click and press Winkey + ` to " +
+    "start/stop";
             this.instructionsText.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.instructionsText.Visible = false;
             // 

@@ -67,7 +67,7 @@ namespace AutoClicker
             webBrowser1.Navigate("http://mossaband.com/AutoClicker/login.html");
 
             hk.KeyCode = Keys.Oemtilde;
-            //hk.Windows = true;
+            hk.Windows = true;
             hk.Pressed += hk_Pressed;
 
             hk.Register(this);
