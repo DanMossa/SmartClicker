@@ -84,23 +84,27 @@ namespace AutoClicker
                     //The ClicksPerSecond is saved as a decimal.
                     //Converting it to string
                     string[] autoclickInterval = Convert.ToString((1100 / Convert.ToDecimal(clicksPerSecondText.Text))).Split('.');
-                    timerAutoClick.Interval = Convert.ToInt32(autoclickInterval[0]);
+                    clicksPerSecondText.Text = autoclickInterval[0];
+                    timerAutoClick.Interval = Convert.ToInt32(clicksPerSecondText.Text);
                 }
                 //If it's more than 50 degrees (HOT).
                 else
                 {
                     string[] autoclickInterval = Convert.ToString((1000 / Convert.ToDecimal(clicksPerSecondText.Text))).Split('.');
-                    timerAutoClick.Interval = Convert.ToInt32(autoclickInterval[0]);
+                    clicksPerSecondText.Text = autoclickInterval[0];
+                    timerAutoClick.Interval = Convert.ToInt32(clicksPerSecondText.Text);
                 }
-
-
                 if (!timerAutoClick.Enabled)
                 {
+                    int setInterval = rndm.Next(2000, 5000);
                     timerAutoClick.Start();
+                    setAutoClickInterval.Interval = setInterval;
+                    setAutoClickInterval.Start();
                 }
                 else if (timerAutoClick.Enabled)
                 {
                     timerAutoClick.Stop();
+                    setAutoClickInterval.Stop();
                 }
                 this.Cursor = new Cursor(Cursor.Current.Handle);
                 xCoord.Text = Convert.ToString(Cursor.Position.X);
@@ -209,7 +213,7 @@ namespace AutoClicker
                     //If Settings.txt already exists, that means they went ahead and calibrated their clicks per second already
                     else
                     {
-                        refineclickButton.Visible = true;
+                        //refineclickButton.Visible = true;
                         instructionsText.Visible = true;
                         string readSettingsTXT = File.ReadAllText(myDocuments + @"\DG\AutoClicker\Settings.txt");
                         clicksPerSecondText.Text = readSettingsTXT;
@@ -251,6 +255,22 @@ namespace AutoClicker
         {
             if (hk.Registered)
             { hk.Unregister(); }
+        }
+
+        private void setAutoClickInterval_Tick(object sender, EventArgs e)
+        {
+        setInterval:
+            try
+            {
+                int setAutoClickInterval = rndm.Next(-100, 100);
+                timerAutoClick.Interval = Convert.ToInt32(clicksPerSecondText.Text) + setAutoClickInterval;
+            }
+            catch (Exception)
+            {
+
+                goto setInterval;
+            }
+
         }
 
 

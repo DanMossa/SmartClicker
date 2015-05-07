@@ -43,6 +43,7 @@
             this.instructionsText = new System.Windows.Forms.TextBox();
             this.xCoord = new System.Windows.Forms.TextBox();
             this.yCoord = new System.Windows.Forms.TextBox();
+            this.setAutoClickInterval = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // button1
@@ -182,6 +183,11 @@
             this.yCoord.TabIndex = 12;
             this.yCoord.Visible = false;
             // 
+            // setAutoClickInterval
+            // 
+            this.setAutoClickInterval.Interval = 5000;
+            this.setAutoClickInterval.Tick += new System.EventHandler(this.setAutoClickInterval_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -230,6 +236,7 @@
         private System.Windows.Forms.TextBox instructionsText;
         private System.Windows.Forms.TextBox xCoord;
         private System.Windows.Forms.TextBox yCoord;
+        private System.Windows.Forms.Timer setAutoClickInterval;
     }
 }
 
