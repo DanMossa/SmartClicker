@@ -9,7 +9,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsInput;
 using System.Runtime.InteropServices;
 using System.IO;
 
@@ -18,14 +17,28 @@ namespace AutoClicker
 
     public partial class Form1 : Form
     {
-
-
-
-
         //Code for changing webBrowser User Agent
         [DllImport("urlmon.dll", CharSet = CharSet.Ansi)]
         private static extern int UrlMkSetSessionOption(int dwOption, string pBuffer, int dwBufferLength, int dwReserved);
         const int URLMON_OPTION_USERAGENT = 0x10000001;
+
+
+        [DllImport("user32.dll")]
+        static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
+
+        private const int MOUSEEVENTF_LEFTDOWN = 0x02;
+        private const int MOUSEEVENTF_LEFTUP = 0x04;
+        private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
+        private const int MOUSEEVENTF_RIGHTUP = 0x10;
+
+        public void DoMouseClick()
+        {
+            //Call the imported function with the cursor's current position
+            int X = Cursor.Position.X;
+            int Y = Cursor.Position.Y;
+            mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, X, Y, 0, 0);
+        }
+
 
         public void ChangeUserAgent(String Agent)
         {
@@ -242,13 +255,12 @@ namespace AutoClicker
         }
 
         Random rndm = new Random();
-        InputSimulator sim = new InputSimulator();
         private void timerAutoClick_Tick(object sender, EventArgs e)
         {
             int xRandomNum = rndm.Next(-2, 2);
             int yRandomNum = rndm.Next(-2, 2);
             Cursor.Position = new Point(Convert.ToInt32(xCoord.Text) + xRandomNum, Convert.ToInt32(yCoord.Text) + yRandomNum);
-            sim.Mouse.LeftButtonClick();
+            DoMouseClick();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -271,6 +283,11 @@ namespace AutoClicker
                 goto setInterval;
             }
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DoMouseClick();
         }
 
 
