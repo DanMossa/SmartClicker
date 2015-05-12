@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
+using Microsoft.Win32;
+using System.Diagnostics;
 
 namespace AutoClicker
 {
@@ -18,10 +20,27 @@ namespace AutoClicker
     public partial class Form1 : Form
     {
         //Code for changing webBrowser User Agent
-        [DllImport("urlmon.dll", CharSet = CharSet.Ansi)]
-        private static extern int UrlMkSetSessionOption(int dwOption, string pBuffer, int dwBufferLength, int dwReserved);
-        const int URLMON_OPTION_USERAGENT = 0x10000001;
+        private static void WebBrowserVersionEmulation()
+        {
+            const string BROWSER_EMULATION_KEY =
+            @"Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION";
+            //
+            // app.exe and app.vshost.exe
+            String appname = Process.GetCurrentProcess().ProcessName + ".exe";
+            //
+            // Webpages are displayed in IE9 Standards mode, regardless of the !DOCTYPE directive.
+            const int browserEmulationMode = 9999;
 
+            RegistryKey browserEmulationKey =
+                Registry.CurrentUser.OpenSubKey(BROWSER_EMULATION_KEY, RegistryKeyPermissionCheck.ReadWriteSubTree) ??
+                Registry.CurrentUser.CreateSubKey(BROWSER_EMULATION_KEY);
+
+            if (browserEmulationKey != null)
+            {
+                browserEmulationKey.SetValue(appname, browserEmulationMode, RegistryValueKind.DWord);
+                browserEmulationKey.Close();
+            }
+        }
 
         [DllImport("user32.dll")]
         static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
@@ -39,16 +58,9 @@ namespace AutoClicker
             mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, X, Y, 0, 0);
         }
 
-
-        public void ChangeUserAgent(String Agent)
-        {
-            UrlMkSetSessionOption(URLMON_OPTION_USERAGENT, Agent, Agent.Length, 0);
-        }
-
         public Form1()
         {
             InitializeComponent();
-
         }
 
         //Function to find tags inside a string
@@ -71,7 +83,7 @@ namespace AutoClicker
             System.IO.Directory.CreateDirectory(myDocuments + @"\DG\AutoClicker");
             //Hide Javascript error and change the UserAgent to be Internet Explorer 9
             webBrowser1.ScriptErrorsSuppressed = true;
-            ChangeUserAgent("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 7.1; Trident/5.0)");
+            WebBrowserVersionEmulation();
 
             loadingText.BringToFront();
 
